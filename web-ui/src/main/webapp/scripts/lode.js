@@ -87,7 +87,32 @@ function _parseOptions(options) {
         'results_per_page' : 25,
         'inference' : false,
         'logging' : false,
-        'default_query' : "SELECT DISTINCT ?class \nwhere {[] a ?class}",
+        'default_query' : "PREFIX lgd:   <http://linkedgeodata.org/triplify/>\n" +
+    	"PREFIX lgdo:    <http://linkedgeodata.org/ontology/>\n" +
+    	"PREFIX lgd-adress:  <http://linkedgeodata.org/ontology/addr/>\n" +
+    	"PREFIX lod-libraries: <http://linkeddata.fh-htwchur.ch/libraryData#>\n" +
+    	"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
+    	"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
+    	"PREFIX gn: <http://www.geonames.org/ontology#>\n" +
+    	"PREFIX lod-swissmaps:  <http://linkeddata.fh-htwchur.ch/swissmap#>\n" +
+    	"SELECT ?swissmap_district_name ?swissmap_district_id (COUNT(?swissmap_district_name) AS ?numberOfLibraries)\n" +  
+    	"WHERE {\n" +
+    	        "?district gn:featureCode gn:A.ADM2;\n" +
+    	        	"gn:name ?district_name;\n" +
+    				"lod-swissmaps:ref ?swissmapdistrict .\n" +
+    			"?swissmapdistrict\n" +
+    				"lod-swissmaps:name ?swissmap_district_name;\n" +
+    				"lod-swissmaps:id ?swissmap_district_id .\n" +
+    	        "?admin2Child gn:parentADM2 ?district;\n" +
+    	        	"gn:name ?admin2child_name;\n" +
+    	        	"gn:featureClass gn:P;\n" +
+    	        	"gn:postalCode ?postalcode .\n" +
+    	    	"SERVICE <http://linkeddata.fh-htwchur.ch/openrdf-sesame/repositories/LibraryStatisticData> {\n" +
+    	    		"?library_statDat lod-libraries:postalCode_stat ?postalcode;\n" +
+    	    			"rdfs:label ?libstat_label .\n" +
+    	    	"}\n" +
+    	"}\n" +
+    	"GROUP BY ?swissmap_district_name ?swissmap_district_id",
         'void_query' : "SELECT DISTINCT ?s ?p ?o \nwhere {?s a <http://rdfs.org/ns/void#Dataset>\n OPTIONAL {?s ?p ?o} }",
         'namespaces' : {
             rdf: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',

@@ -76,3 +76,12 @@ span.pagmes {
 
 }
 
+.query-short {
+	text-decoration: underline;
+}
+
+.query-short:hover {
+	text-decoration: underline;
+}
+
+

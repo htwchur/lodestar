@@ -15,8 +15,8 @@
 var exampleQueries = [
 
     {
-        shortname : "Query 1",
-        description: "Number of Swiss Libraries in every district",
+        shortname : "Geonames & Swiss Library Statistics",
+        description: "Number of Libraries per District",
         query:"PREFIX lgd:   <http://linkedgeodata.org/triplify/>\n" +
             	"PREFIX lgdo:    <http://linkedgeodata.org/ontology/>\n" +
             	"PREFIX lgd-adress:  <http://linkedgeodata.org/ontology/addr/>\n" +
